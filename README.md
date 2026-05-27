@@ -1,4 +1,4 @@
-# Домашнее задание к занятию "`Название занятия`" - `Фамилия и имя студента`
+# Домашнее задание к занятию "`Домашнее задание к занятию «GitLab`" - `Шичков Евгений`
 
 
 ### Инструкция по выполнению домашнего задания
@@ -26,25 +26,45 @@
 
 `Приведите ответ в свободной форме........`
 
-1. `Заполните здесь этапы выполнения, если требуется ....`
-2. `Заполните здесь этапы выполнения, если требуется ....`
-3. `Заполните здесь этапы выполнения, если требуется ....`
-4. `Заполните здесь этапы выполнения, если требуется ....`
-5. `Заполните здесь этапы выполнения, если требуется ....`
-6. 
+1. `Разверните GitLab локально, используя Vagrantfile и инструкцию, описанные в этом репозитории.`
+**Развёртывание GitLab**  
+   - Склонирован репозиторий `https://github.com/netology-code/sdvps-materials.git`
+   - В папке `gitlab` выполнен `vagrant up` с переменной `VAGRANT_EXPERIMENTAL="disks"`
+   - В файл `C:\Windows\System32\drivers\etc\hosts` добавлена запись:  
+     `192.168.56.10 gitlab.localdomain gitlab`
+   - После успешного запуска GitLab доступен по адресу `http://192.168.56.10`
+2. `Создайте новый проект и пустой репозиторий в нём.`
+**Создание проекта и пустого репозитория**  
+   - В веб-интерфейсе GitLab создан проект `my-project` (тип `Blank project`, без инициализации README).
+3. `Зарегистрируйте gitlab-runner для этого проекта и запустите его в режиме Docker. Раннер можно регистрировать и запускать на той же виртуальной машине, на которой запущен GitLab.`
+**Регистрация и запуск gitlab-runner**  
+   - Внутри виртуальной машины (`vagrant ssh`) выполнен запуск регистрации раннера:
+     
+     sudo docker run -ti --rm --name gitlab-runner-register \
+       --network host \
+       -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+       -v /var/run/docker.sock:/var/run/docker.sock \
+       gitlab/gitlab-runner:latest register
 
-```
-Поле для вставки кода...
-....
-....
-....
-....
-```
+   URL: http://192.168.56.10
+Регистрационный токен: взят из настроек проекта (Settings → CI/CD → Runners → New project runner)
+Executor: docker
+Образ по умолчанию: alpine:latest
+Раннер запущен командой:
+sudo docker run -d --name gitlab-runner --restart always \
+  --network host \
+  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  gitlab/gitlab-runner:latest
+  
+В разделе Settings → CI/CD → Runners проекта появился раннер со статусом online (зелёный индикатор).
 
 `При необходимости прикрепитe сюда скриншоты
-![Название скриншота 1](ссылка на скриншот 1)`
-
-
+![fork-репозитория](https://iimg.su/i/otOJKl)`
+![git_clone](https://iimg.su/i/QhWdNO)`
+![Запуск_GitLab](https://iimg.su/i/mYzPPm)`
+![PassotGitLab](https://iimg.su/i/JKLftH)`
+![Runner_Start](https://iimg.su/i/xrn6bG)`
 ---
 
 ### Задание 2
