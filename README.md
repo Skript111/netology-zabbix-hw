@@ -56,15 +56,15 @@ sudo docker run -d --name gitlab-runner --restart always \
   -v /srv/gitlab-runner/config:/etc/gitlab-runner \
   -v /var/run/docker.sock:/var/run/docker.sock \
   gitlab/gitlab-runner:latest
-  
+
 В разделе Settings → CI/CD → Runners проекта появился раннер со статусом online (зелёный индикатор).
 
 `При необходимости прикрепитe сюда скриншоты
-![fork-репозитория](https://iimg.su/i/otOJKl)`
-![git_clone](https://iimg.su/i/QhWdNO)`
-![Запуск_GitLab](https://iimg.su/i/mYzPPm)`
-![PassotGitLab](https://iimg.su/i/JKLftH)`
-![Runner_Start](https://iimg.su/i/xrn6bG)`
+![fork-репозитория](zad1\fork.png)`
+![git_clone](zad1\git clone.png)`
+![Запуск_GitLab](zad1\GitLab- вошли по ip.png)`
+![PassotGitLab](zad1\PassGitLab.png)`
+![Runner_Start](zad1\Раннер_запущен.png)`
 ---
 
 ### Задание 2
