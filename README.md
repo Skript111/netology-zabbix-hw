@@ -40,23 +40,26 @@
 **Регистрация и запуск gitlab-runner**  
    - Внутри виртуальной машины (`vagrant ssh`) выполнен запуск регистрации раннера:
      
-     sudo docker run -ti --rm --name gitlab-runner-register \
-       --network host \
-       -v /srv/gitlab-runner/config:/etc/gitlab-runner \
-       -v /var/run/docker.sock:/var/run/docker.sock \
-       gitlab/gitlab-runner:latest register
+   ```bash
+sudo docker run -ti --rm --name gitlab-runner-register \
+  --network host \
+  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
+  -v /var/run/docker.sock:/var/run/docker.sock \
+  gitlab/gitlab-runner:latest register
+```
 
    URL: http://192.168.56.10
 Регистрационный токен: взят из настроек проекта (Settings → CI/CD → Runners → New project runner)
 Executor: docker
 Образ по умолчанию: alpine:latest
 Раннер запущен командой:
+```
 sudo docker run -d --name gitlab-runner --restart always \
   --network host \
   -v /srv/gitlab-runner/config:/etc/gitlab-runner \
   -v /var/run/docker.sock:/var/run/docker.sock \
   gitlab/gitlab-runner:latest
-
+```
 В разделе Settings → CI/CD → Runners проекта появился раннер со статусом online (зелёный индикатор).
 
 `При необходимости прикрепитe сюда скриншоты
