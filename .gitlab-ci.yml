@@ -7,8 +7,6 @@ test_job:
   script:
     - echo "Running tests..."
     - echo "All tests passed!"
-  tags:
-    - docker-runner
 
 build_job:
   stage: build
@@ -18,5 +16,3 @@ build_job:
   artifacts:
     paths:
       - build/
-  tags:
-    - docker-runner
