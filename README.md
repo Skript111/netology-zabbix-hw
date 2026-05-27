@@ -40,7 +40,7 @@
 **Регистрация и запуск gitlab-runner**  
    - Внутри виртуальной машины (`vagrant ssh`) выполнен запуск регистрации раннера:
      
-   ```bash
+```bash
 sudo docker run -ti --rm --name gitlab-runner-register \
   --network host \
   -v /srv/gitlab-runner/config:/etc/gitlab-runner \
@@ -53,7 +53,7 @@ sudo docker run -ti --rm --name gitlab-runner-register \
 Executor: docker
 Образ по умолчанию: alpine:latest
 Раннер запущен командой:
-```
+```bash
 sudo docker run -d --name gitlab-runner --restart always \
   --network host \
   -v /srv/gitlab-runner/config:/etc/gitlab-runner \
