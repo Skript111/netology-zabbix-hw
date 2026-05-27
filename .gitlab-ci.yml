@@ -1,0 +1,22 @@
+stages:
+  - test
+  - build
+
+test_job:
+  stage: test
+  script:
+    - echo "Running tests..."
+    - echo "All tests passed!"
+  tags:
+    - docker-runner
+
+build_job:
+  stage: build
+  script:
+    - echo "Building application..."
+    - echo "Build complete!"
+  artifacts:
+    paths:
+      - build/
+  tags:
+    - docker-runner
