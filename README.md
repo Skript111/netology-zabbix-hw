@@ -120,6 +120,7 @@ build_job:
 ```
 Скриншот Pipeline
 ![Pipline](zad2/Pipline.png)
-![Origin](zad2/push.png)
+Скриншот Code
+![code](zad2/code.png)
 
 ---
