@@ -1,4 +1,4 @@
-# Домашнее задание к занятию "`Домашнее задание к занятию «GitLab`" - `Шичков Евгений`
+# Домашнее задание к занятию "`Домашнее задание к занятию «Zabbix`" - `Шичков Евгений`
 
 
 ### Инструкция по выполнению домашнего задания
@@ -22,105 +22,49 @@
 
 ---
 
-### Задание 1
+## Задание 1. Создание шаблона с мониторингом CPU и RAM
 
-`Приведите ответ в свободной форме........`
+**Выполнено:**
+- В веб-интерфейсе Zabbix создан шаблон `Template CPU-RAM Monitoring`.
+- В шаблоне созданы два элемента данных (items):
+  - **Загрузка CPU** – ключ `system.cpu.util[,idle]` (вычисляемый, формула `100 - last("system.cpu.util[,idle]")`).
+  - **Загрузка RAM** – ключ `vm.memory.size[pused]`.
+- Интервал опроса – 30 секунд.
 
-1. `Разверните GitLab локально, используя Vagrantfile и инструкцию, описанные в этом репозитории.`
-**Развёртывание GitLab**  
-   - Склонирован репозиторий `https://github.com/netology-code/sdvps-materials.git`
-   - В папке `gitlab` выполнен `vagrant up` с переменной `VAGRANT_EXPERIMENTAL="disks"`
-   - В файл `C:\Windows\System32\drivers\etc\hosts` добавлена запись:  
-     `192.168.56.10 gitlab.localdomain gitlab`
-   - После успешного запуска GitLab доступен по адресу `http://192.168.56.10`
-2. `Создайте новый проект и пустой репозиторий в нём.`
-**Создание проекта и пустого репозитория**  
-   - В веб-интерфейсе GitLab создан проект `my-project` (тип `Blank project`, без инициализации README).
-3. `Зарегистрируйте gitlab-runner для этого проекта и запустите его в режиме Docker. Раннер можно регистрировать и запускать на той же виртуальной машине, на которой запущен GitLab.`
-**Регистрация и запуск gitlab-runner**  
-   - Внутри виртуальной машины (`vagrant ssh`) выполнен запуск регистрации раннера:
-     
-```bash
-sudo docker run -ti --rm --name gitlab-runner-register \
-  --network host \
-  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  gitlab/gitlab-runner:latest register
-```
+**Скриншот страницы шаблона с элементами данных:**
 
-   URL: http://192.168.56.10
-Регистрационный токен: взят из настроек проекта (Settings → CI/CD → Runners → New project runner)
-Executor: docker
-Образ по умолчанию: alpine:latest
-Раннер запущен командой:
-```bash
-sudo docker run -d --name gitlab-runner --restart always \
-  --network host \
-  -v /srv/gitlab-runner/config:/etc/gitlab-runner \
-  -v /var/run/docker.sock:/var/run/docker.sock \
-  gitlab/gitlab-runner:latest
-```
-В разделе Settings → CI/CD → Runners проекта появился раннер со статусом online (зелёный индикатор).
+![Шаблон с элементами CPU и RAM](img/task1.png)
 
-`При необходимости прикрепитe сюда скриншоты
-![fork-репозитория](zad1/fork.png)
-![git clone](zad1/git_clone.png)
-![Запуск GitLab](zad1/gitlab-ip.png)
-![Пароль GitLab](zad1/gitlab-password.png)
-![Runner запущен](zad1/runner-started.png)
 ---
 
-### Задание 2
+## Задания 2–3. Добавление хостов и привязка шаблонов
 
-`Приведите ответ в свободной форме........`
+**Выполнено:**
+- В Zabbix добавлены два хоста:
+  - `ShichckovNetology-1` (порт 10050, агент на той же ВМ)
+  - `ShichckovNetology-2` (порт 10052, второй экземпляр агента)
+- К каждому хосту привязаны шаблоны:
+  - `Linux by Zabbix agent`
+  - `Template CPU-RAM Monitoring` (созданный в задании 1)
+- Оба хоста имеют зелёный статус (доступны).
 
-1. `Запушьте репозиторий на GitLab, изменив origin. Это изучалось на занятии по Git.`
-**Выполнение:**
-```
-git remote set-url origin http://192.168.56.10/root/my-project.git
-```
-#Замена Origin , после проверяем:
-```
-git remote -v
-```
-Результат:
-![Origin](zad2/origin.png)
+**Скриншот страницы «Узлы сети» с двумя хостами и привязанными шаблонами:**
 
-Запушил на GitLab
-Результат:
-![push](zad2/push.png)
+![Хосты и шаблоны](img/task2.png)
 
-2. `Создайте .gitlab-ci.yml, описав в нём все необходимые, на ваш взгляд, этапы.`
-**Выполнение:**
-В корне репозитория создан файл `.gitlab-ci.yml`.
-Файл добавлен в Git и запушен в GitLab.
-После пуша GitLab автоматически запустил pipeline.
-Оба этапа (`test` и `build`) завершились успешно.
+---
 
-**Содержимое `.gitlab-ci.yml`:**
-```yaml
-stages:
-  - test
-  - build
+## Задание 4. Создание дашборда
 
-test_job:
-  stage: test
-  script:
-    - echo "Running tests..."
-    - echo "All tests passed!"
+**Выполнено:**
+- В разделе «Панели управления» создана панель с именем `Моя первая панель`.
+- Добавлены два виджета типа «График (классический)»:
+  - График загрузки CPU для хоста `ShichckovNetology-1`.
+  - График загрузки RAM для хоста `ShichckovNetology-2`.
+- Виджеты расположены удобным образом.
 
-build_job:
-  stage: build
-  script:
-    - echo "Building application..."
-    - echo "Build complete!"
-  artifacts:
-    paths:
-      - build/
-```
-Скриншот Pipeline
-![Pipline](zad2/Pipline.png)
-Скриншот Code
-![code](zad2/code.png)
+**Скриншот готового дашборда:**
+
+![Дашборд с графиками](img/task3.png)
 
 ---
