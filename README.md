@@ -71,3 +71,46 @@
 ![key](img/key.png)
 ![Код на Python](img/python.png)
 
+## ДОПОЛНЯЮ ! 
+
+По заданию Bash: проверьте, что в описании явно отражена строка конфигурации UserParameter, отвечающая за вызов скрипта, и что она корректно оформлена.
+По заданию Python: убедитесь, что в README продемонстрирована привязка настроенных параметров к шаблону, а не только сам скрипт
+
+### Конфигурация UserParameter
+
+Для сбора кастомных метрик созданы скрипты:
+- `/usr/local/bin/custom_process_count.sh` (Bash) – возвращает количество процессов.
+- `/usr/local/bin/custom_disk_usage.py` (Python) – возвращает процент использования корневого раздела.
+
+В файл `/etc/zabbix/zabbix_agentd.d/userparameters.conf` добавлены строки:
+
+- UserParameter=custom.process.count,/usr/local/bin/custom_process_count.sh
+- UserParameter=custom.disk.usage,/usr/bin/python3 /usr/local/bin/custom_disk_usage.py
+
+![Конфигурация](img/КонфигурацияUserParametr.png)
+
+В шаблоне `Template CPU-RAM Monitoring` созданы элементы данных с ключами `custom.process.count` и `custom.disk.usage` (тип – Zabbix agent). Они собирают данные с хостов, к которым привязан шаблон.
+
+![Повторно_скриншот_элементов](img/element.png)
+
+Скриншоты поступающих данных в этих элементов я прикладывал. Честно уже надоело
+
+### Привязка UserParameter к шаблону
+
+Для сбора данных от созданных UserParameter (Bash и Python) в шаблоне `Template CPU-RAM Monitoring` созданы соответствующие элементы данных:
+
+- **Ключ** `custom.process.count` – тип `Zabbix agent`, собирает количество процессов.
+- **Ключ** `custom.disk.usage` – тип `Zabbix agent`, собирает процент использования диска.
+
+Эти элементы данных привязаны к хостам `Zabbix server` и `ShichckovNetology-1` через шаблон.
+
+Ниже представлен скриншот списка элементов данных в шаблоне, где видны оба ключа, их типы и статус «Активировано»:
+Вот скрины где ключ и тип........................................
+
+![1](img/1.png)
+![1](img/2.png)
+![1](img/3.png)
+![1](img/4.png)
+
+Вроде бы я уже все скриншоты приложил даже те которые явно не указаны в [Github ](https://github.com/netology-code/smon-homeworks/blob/main/hw-03.md)
+
