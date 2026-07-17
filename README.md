@@ -36,6 +36,7 @@
 
 **Результат работы Bash-скрипта (количество процессов):**
 ![Bash UserParameter](img/bash.png)
+![Количество процессов](img/count.proc.png)
 ![Bash UserParameter](img/TestPar.png)
 
 **Результат работы Python-скрипта (использование диска):**
@@ -67,7 +68,6 @@
 ---
 ## Дополнительные скриншоты.
 
-![Количество процессов](img/count.proc.png)
 ![key](img/key.png)
 ![Код на Python](img/python.png)
 
